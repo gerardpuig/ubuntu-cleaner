@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Ubuntu Cleaner
+Comment=Ubuntu Cleaner is a tool that makes it easy to clean your ubuntu system.
+Exec=ubuntu-cleaner
+Icon=ubuntu-cleaner
+Terminal=false
+X-MultipleArgs=false
+Type=Application
+StartupNotify=true
+Categories=GNOME;GTK;System;
