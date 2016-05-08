@@ -1,2 +1,8 @@
 *.pyc
 .idea/
+
+# Deb builds
+deb_dist/
+dist/
+ubuntu_cleaner.egg-info/
+ubuntu-cleaner-*.tar.gz
