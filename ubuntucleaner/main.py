@@ -5,7 +5,7 @@ from gi.repository import Gtk
 from ubuntucleaner.gui import GuiBuilder
 from ubuntucleaner.settings.constants import VERSION
 from ubuntucleaner.janitor import JanitorPage
-from ubuntutweak.utils import icon
+from ubuntucleaner.utils import icon
 
 log = logging.getLogger('app')
 
