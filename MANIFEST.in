@@ -1,0 +1,2 @@
+include COPYING README.md
+recursive-include data *.png *.xml *.desktop
