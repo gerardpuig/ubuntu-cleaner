@@ -26,6 +26,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CONFIG_ROOT = os.path.join(GLib.get_user_config_dir(), 'ubuntu-cleaner')
 IS_INSTALLED = True
 
+if not os.path.exists(CONFIG_ROOT):
+    os.makedirs(CONFIG_ROOT)
+
 try:
     LANG = os.getenv('LANG').split('.')[0].lower().replace('_', '-')
 except:
