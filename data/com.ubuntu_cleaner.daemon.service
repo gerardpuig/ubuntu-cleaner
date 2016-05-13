@@ -1,0 +1,4 @@
+[D-BUS Service]
+Name=com.ubuntu_cleaner.daemon
+Exec=/usr/share/ubuntu-cleaner/ubuntu-cleaner-daemon
+User=root

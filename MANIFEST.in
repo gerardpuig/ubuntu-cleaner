@@ -1,2 +1,2 @@
 include COPYING README.md
-recursive-include data *.png *.xml *.desktop
+recursive-include data *.png *.xml *.desktop *.conf *.service *.policy ubuntu-cleaner-daemon

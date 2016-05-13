@@ -1,0 +1,14 @@
+#!/usr/bin/python
+
+import dbus
+import dbus.mainloop.glib
+from gi.repository import GObject
+
+from ubuntucleaner.daemon.service import DaemonService
+
+
+if __name__ == '__main__':
+    dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
+    mainloop = GObject.MainLoop()
+    DaemonService(dbus.SystemBus(), mainloop)
+    mainloop.run()
