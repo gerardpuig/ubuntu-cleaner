@@ -1,8 +1,10 @@
 import os
+import time
 import logging
 
 from ubuntucleaner.janitor import JanitorPlugin, PackageObject
 from ubuntucleaner.utils import icon
+from ubuntucleaner.daemon.dbusproxy import proxy
 
 
 log = logging.getLogger('PackageConfigsPlugin')
@@ -43,6 +45,24 @@ class PackageConfigsPlugin(JanitorPlugin):
                 pass
 
         self.emit('scan_finished', True, count, 0)
+
+    def clean_cruft(self, cruft_list=[], parent=None):
+        for index, cruft in enumerate(cruft_list):
+            log.debug('Cleaning...%s' % cruft.get_name())
+            proxy.clean_configs(cruft.get_name())
+            line, returncode = proxy.get_cmd_pipe()
+            while returncode == 'None':
+                log.debug('output: %s, returncode: %s' % (line, returncode))
+                time.sleep(0.2)
+                line, returncode = proxy.get_cmd_pipe()
+
+            if returncode != '0':
+                self.emit('clean_error', returncode)
+                break
+            else:
+                self.emit('object_cleaned', cruft, index + 1)
+
+        self.emit('all_cleaned', True)
 
     def get_summary(self, count):
         if count:
