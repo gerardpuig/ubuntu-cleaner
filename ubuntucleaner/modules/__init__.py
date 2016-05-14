@@ -3,7 +3,6 @@ import sys
 import logging
 import inspect
 
-from ubuntucleaner.utils import system
 from ubuntucleaner.settings.debug import log_traceback
 
 log = logging.getLogger('ModuleLoader')
@@ -71,7 +70,7 @@ class ModuleLoader:
             log.error("Module import error: %s", str(e))
         else:
             for k, v in inspect.getmembers(package):
-                self._insert_moduel(k, v, mark_user)
+                self._insert_module(k, v, mark_user)
 
     def do_folder_import(self, path, mark_user=False):
         if path not in sys.path:
@@ -86,7 +85,7 @@ class ModuleLoader:
             elif f.endswith('.py') and f != '__init__.py':
                 self.do_single_import(f, mark_user)
 
-    def _insert_moduel(self, k, v, mark_user=False):
+    def _insert_module(self, k, v, mark_user=False):
         if self.is_module_active(k, v):
             self.module_table[v.get_name()] = v
 
@@ -104,15 +103,13 @@ class ModuleLoader:
 
     @classmethod
     def is_module_active(cls, k, v):
+        from ubuntucleaner.janitor import JanitorPlugin
         try:
-            if k not in ('CleanerModule', 'JanitorPlugin') and \
-                    hasattr(v, '__utmodule__'):
-                if cls.is_supported_desktop(v.__desktop__) and \
-                   cls.is_supported_distro(v.__distro__) and \
-                   v.is_active():
-                       return True
+            if "Plugin" in k and k not in ('JanitorPlugin', 'JanitorCachePlugin') and \
+                    issubclass(v, JanitorPlugin) and hasattr(v, '__utmodule__'):
+                return v.is_active()
             return False
-        except Exception, e:
+        except Exception:
             log_traceback(log)
             return False
 
@@ -127,18 +124,3 @@ class ModuleLoader:
 
     def get_module(self, name):
         return self.module_table[name]
-
-    @classmethod
-    def is_supported_desktop(cls, desktop_name):
-        if desktop_name:
-            return system.DESKTOP in desktop_name
-        else:
-            return True
-
-    @classmethod
-    def is_supported_distro(cls, distro):
-        log.debug('is_supported_distro')
-        if distro:
-            return system.CODENAME in distro
-        else:
-            return True
