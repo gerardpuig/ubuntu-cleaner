@@ -4,10 +4,11 @@ import sys
 import optparse
 import logging
 
-from gi.repository import GObject, Gdk, Gtk, Gio
+import dbus
+import dbus.service
+import dbus.mainloop.glib
 
-Gdk.threads_init()
-GObject.threads_init()
+from gi.repository import GObject, Gdk, Gtk, Gio
 
 from ubuntucleaner.utils import system
 from ubuntucleaner.settings.constants import VERSION, IS_INSTALLED
@@ -61,6 +62,12 @@ if __name__ == "__main__":
 
     if options.debug or not IS_INSTALLED:
         enable_debugging()
+
+    # Required to use existing system daemons such Apt Daemon
+    Gdk.threads_init()
+    GObject.threads_init()
+    dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
+    dbus.mainloop.glib.threads_init()
 
     app = UbuntuCleanerApp()
     app.run(sys.argv)
