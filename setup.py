@@ -18,6 +18,14 @@ setup(
         ('share/ubuntu-cleaner/ui/', glob.glob('data/ui/*.xml')),
         ('share/ubuntu-cleaner/', ['data/ubuntu-cleaner-daemon']),
     ],
+    install_requires=[
+        'lxml',
+        'dbus',
+        'defer',
+        'apt',
+        'aptdaemon',
+        'aptdaemon.gtk3widgets',
+    ],
     license='GNU GPL',
     platforms='linux',
 )
