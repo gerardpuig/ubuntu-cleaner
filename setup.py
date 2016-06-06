@@ -16,6 +16,10 @@ setup(
         ('share/polkit-1/actions/', ['data/com.ubuntu-cleaner.daemon.policy']),
         ('share/applications/', ['data/ubuntu-cleaner.desktop']),
         ('share/ubuntu-cleaner/ui/', glob.glob('data/ui/*.xml')),
+        ('share/icons/hicolor/128x128/apps/', ['data/icons/128x128/apps/ubuntu-cleaner.png']),
+        ('share/icons/hicolor/64x64/apps/', ['data/icons/64x64/apps/ubuntu-cleaner.png']),
+        ('share/icons/hicolor/48x48/apps/', ['data/icons/48x48/apps/ubuntu-cleaner.png']),
+        ('share/icons/hicolor/32x32/apps/', ['data/icons/32x32/apps/ubuntu-cleaner.png']),
         ('share/ubuntu-cleaner/', ['data/ubuntu-cleaner-daemon']),
     ],
     install_requires=[
