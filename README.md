@@ -13,9 +13,9 @@ Ubuntu Cleaner is a tool that makes it easy to clean your ubuntu system.
 * `sudo apt update && sudo apt install ubuntu-cleaner` installs ubuntu-cleaner.
 
 ### Related websites ###
-Blog `http://ubuntu-cleaner.blogspot.com`
-Launchpad `https://launchpad.net/~gerardpuig/+archive/ubuntu/ppa`
-Github `https://github.com/gerardpuig/ubuntu-cleaner`
+* Blog <a href="http://ubuntu-cleaner.blogspot.com">http://ubuntu-cleaner.blogspot.com</a>.
+* Launchpad <a href="https://launchpad.net/~gerardpuig/+archive/ubuntu/ppa">https://launchpad.net/~gerardpuig/+archive/ubuntu/ppa</a>.
+* Github <a href="https://github.com/gerardpuig/ubuntu-cleaner">https://github.com/gerardpuig/ubuntu-cleaner</a>.
 
 ### License ###
 This software is released under the GNU General Public License (GPL) version 3.
