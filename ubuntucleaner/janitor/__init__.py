@@ -129,7 +129,7 @@ class JanitorPlugin(GObject.GObject):
     def get_cruft(self):
         return ()
 
-    def get_summary(self, count, size):
+    def get_summary(self, count):
         return self.get_title()
 
     def clean_cruft(self, parent=None, cruft_list=[]):

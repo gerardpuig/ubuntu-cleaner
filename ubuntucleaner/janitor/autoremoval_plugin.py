@@ -43,7 +43,7 @@ class AutoRemovalPlugin(JanitorPlugin):
         AptWorker.update_apt_cache(True)
         self.emit('all_cleaned', True)
 
-    def get_summary(self, count, size):
+    def get_summary(self, count):
         if count:
             return '[%d] %s' % (count, self.__title__)
         else:
