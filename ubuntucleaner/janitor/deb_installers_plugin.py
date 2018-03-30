@@ -2,7 +2,7 @@ import logging
 import os
 
 from ubuntucleaner.janitor import JanitorPlugin
-from ubuntucleaner.settings.debug import get_traceback
+from ubuntucleaner.settings.debug import get_traceback, run_traceback
 from ubuntucleaner.janitor import CruftObject
 
 log = logging.getLogger('Janitor')
