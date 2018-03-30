@@ -19,16 +19,17 @@ class FirefoxDataPlugin(JanitorPlugin):
         try:
             count = 0
             size = 0
-            for profile in os.listdir(self.profile_location):
-                for data in ["cookies.sqlite*", "places.sqlite*", "favicons.sqlite*", "formhistory.sqlite", "sessionstore-backups/*", "webappsstore.sqlite*"]:
-                    data_list = glob.glob(os.path.join(self.profile_location, profile, data))
-                    if data_list:
-                        for data_item in data_list:
-                            count +=1
-                            file_size = os.path.getsize(data_item)
-                            size += file_size
-                            object = CacheObject(os.path.basename(data_item), data_item, size=file_size)
-                            self.emit('find_object', object, count)
+            if os.path.exists(self.profile_location):
+                for profile in os.listdir(self.profile_location):
+                    for data in ["cookies.sqlite*", "places.sqlite*", "favicons.sqlite*", "formhistory.sqlite", "sessionstore-backups/*", "webappsstore.sqlite*"]:
+                        data_list = glob.glob(os.path.join(self.profile_location, profile, data))
+                        if data_list:
+                            for data_item in data_list:
+                                count +=1
+                                file_size = os.path.getsize(data_item)
+                                size += file_size
+                                object = CacheObject(os.path.basename(data_item), data_item, size=file_size)
+                                self.emit('find_object', object, count)
 
             self.emit('scan_finished', True, count, size)
         except Exception, e:
