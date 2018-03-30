@@ -13,7 +13,7 @@ log = logging.getLogger('OldKernelPlugin')
 
 
 class OldKernelPlugin(JanitorPlugin):
-    __title__ = _('Old Kernel')
+    __title__ = _('Old Kernels')
     __category__ = 'system'
 
     p_kernel_version = re.compile('[.\d]+-\d+')
@@ -37,7 +37,7 @@ class OldKernelPlugin(JanitorPlugin):
             if cache:
                 for pkg in cache:
                     if pkg.is_installed and self.is_old_kernel_package(pkg.name):
-                        log.debug("Find old kernerl: %s" % pkg.name)
+                        log.debug("Find old kernel: %s" % pkg.name)
                         count += 1
                         size += pkg.installed.size
                         self.emit('find_object',

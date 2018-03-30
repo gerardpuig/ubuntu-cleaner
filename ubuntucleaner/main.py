@@ -35,4 +35,4 @@ class UbuntuCleanerWindow(GuiBuilder):
         self.feature_dict['janitor'] = self.notebook.append_page(janitor_page, Gtk.Label('janitor'))
         self.module_image.set_from_pixbuf(icon.get_from_name('computerjanitor', size=48))
         self.title_label.set_markup('<b><big>%s</big></b>' % _('Computer Janitor'))
-        self.description_label.set_text(_("Clean up a system so it's more like a freshly installed one"))
+        self.description_label.set_text(_("Free up disk space and remove private information"))

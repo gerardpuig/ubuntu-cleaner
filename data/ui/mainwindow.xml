@@ -7,14 +7,14 @@
     <property name="type_hint">dialog</property>
     <property name="program_name">Ubuntu Cleaner</property>
     <property name="copyright">Copyright © 2016 Gerard Puig</property>
-    <property name="comments" translatable="yes">Ubuntu Cleaner is a tool for Ubuntu that makes it easy to configure your system and desktop settings.</property>
+    <property name="comments" translatable="yes">Ubuntu Cleaner is a tool for Ubuntu that makes it easy to remove unnessecary files.</property>
     <property name="license" translatable="yes">Ubuntu Cleaner is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
 Ubuntu Cleaner is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License along with Ubuntu Cleaner; if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA</property>
-    <property name="authors">Gerard Puig &lt;gerardpuigdev@gmail.com&gt;
-
-Based on Ubuntu Tweak
-Tualatrix Chou &lt;tualatrix@gmail.com&gt;
+    <property name="authors">
+        Gerard Puig &lt;gerardpuigdev@gmail.com&gt;
+        Jeremy Potter &lt;jwinnie@stormdesign.us&gt;
+        Based on Ubuntu Tweak by Tualatrix Chou &lt;tualatrix@gmail.com&gt;
     </property>
     <property name="logo_icon_name">ubuntu-cleaner</property>
     <property name="wrap_license">True</property>
