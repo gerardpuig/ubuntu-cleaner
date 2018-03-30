@@ -3,6 +3,8 @@ import logging
 import StringIO
 import traceback
 
+import gi
+gi.require_version("Notify", "0.7")
 from gi.repository import Gtk, Gdk, Notify
 
 from ubuntucleaner.utils import system

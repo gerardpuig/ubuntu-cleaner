@@ -8,6 +8,9 @@ import dbus
 import dbus.service
 import dbus.mainloop.glib
 
+import gi
+gi.require_version("Gtk", "3.0")
+gi.require_version("Gdk", "3.0")
 from gi.repository import GObject, Gdk, Gtk, Gio
 
 from ubuntucleaner.utils import system
