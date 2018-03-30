@@ -1,7 +1,15 @@
 # Ubuntu Cleaner #
 
+![screenshot](data/screenshot.png)
+
 ### Introduction ###
-Ubuntu Cleaner is a tool that makes it easy to clean your ubuntu system.
+Ubuntu Cleaner is a tool that makes it easy to clean your Ubuntu system.
+
+- Clear browser cache
+- Clear APT cache
+- Clear thumbnail cache
+- Remove unneeded packages
+- Remove old kernels
 
 ### How to build & test ###
 * `make deb` generates a .deb package ready to be installed.

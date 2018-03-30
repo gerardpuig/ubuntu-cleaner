@@ -10,12 +10,12 @@ log = logging.getLogger('MozillaCachePlugin')
 class MozillaCachePlugin(JanitorCachePlugin):
     __category__ = 'application'
 
-    targets = ['Cache',
-               'safebrowsing',
-               'startupCache',
-               'thumbnails',
-               'cache2',
-               'OfflineCache']
+    #targets = ['Cache',
+    #           'safebrowsing',
+    #           'startupCache',
+    #           'thumbnails',
+    #           'cache2',
+    #           'OfflineCache']
     app_path = ''
 
     @classmethod
