@@ -69,8 +69,8 @@ class OldKernelPlugin(JanitorPlugin):
 
     def is_old_kernel_package(self, pkg):
         basenames = ['linux-image', 'linux-image-extra', 'linux-headers',
-                     'linux-image-debug', 'linux-ubuntu-modules',
-                     'linux-header-lum', 'linux-backport-modules',
+                     'linux-image-debug', 'linux-ubuntu-modules', 'linux-modules',
+                     'linux-header-lum', 'linux-backport-modules', 'linux-modules-extra',
                      'linux-header-lbm', 'linux-restricted-modules']
 
         if pkg.startswith('linux'):
