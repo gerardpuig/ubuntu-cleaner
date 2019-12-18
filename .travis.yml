@@ -1,0 +1,13 @@
+sudo: required
+
+language: generic
+
+services:
+  - docker
+  - xvfb
+
+before_script:
+  - make docker/build
+
+script:
+  - make docker/make/test
