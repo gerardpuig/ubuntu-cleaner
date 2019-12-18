@@ -1,6 +1,7 @@
 # Ubuntu Cleaner #
 
 ![license](https://img.shields.io/github/license/gerardpuig/ubuntu-cleaner.svg)
+[![Build Status](https://travis-ci.com/gerardpuig/ubuntu-cleaner.svg?branch=master)](https://travis-ci.com/gerardpuig/ubuntu-cleaner)
 
 ![screenshot](data/screenshot.png)
 
