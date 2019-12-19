@@ -3,8 +3,11 @@ PIP=$(VIRTUAL_ENV)/bin/pip
 PYTHON=$(VIRTUAL_ENV)/bin/python
 PYTHON_MAJOR_VERSION=2
 PYTHON_MINOR_VERSION=7
+COVERALLS=$(VIRTUAL_ENV)/bin/coveralls
+COVERAGE=$(VIRTUAL_ENV)/bin/coverage
 SYSTEM_DEPENDENCIES= \
     gir1.2-notify-0.7 \
+    git \
     libpython$(PYTHON_VERSION)-dev \
     python$(PYTHON_VERSION) \
     python$(PYTHON_VERSION)-dev \
@@ -25,7 +28,7 @@ system_dependencies:
 
 $(VIRTUAL_ENV):
 	virtualenv --python=$(PYTHON_WITH_VERSION) --system-site-packages $(VIRTUAL_ENV)
-	$(PIP) install lxml
+	$(PIP) install -r requirements.txt
 
 virtualenv: $(VIRTUAL_ENV)
 
@@ -37,7 +40,9 @@ clean:
 	@rm -f ubuntu-cleaner*.tar.gz
 
 test: virtualenv
-	$(PYTHON) -m unittest discover tests
+	$(COVERAGE) run --source=ubuntucleaner -m unittest discover tests
+	$(COVERAGE) report
+	@if [ -n "$$CI" ]; then $(COVERALLS); fi \
 
 run: virtualenv
 	$(PYTHON) ubuntu-cleaner
@@ -46,7 +51,7 @@ docker/build:
 	docker build --tag=$(DOCKER_IMAGE) .
 
 docker/make/%:
-	docker run -e DISPLAY -v $(DOCKER_VOLUME) --rm $(DOCKER_IMAGE) make $*
+	docker run --env-file docker.env -v $(DOCKER_VOLUME) --rm $(DOCKER_IMAGE) make $*
 
 docker/shell:
-	docker run -e DISPLAY -v $(DOCKER_VOLUME) -it --rm $(DOCKER_IMAGE)
+	docker run --env-file docker.env -v $(DOCKER_VOLUME) -it --rm $(DOCKER_IMAGE)

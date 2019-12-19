@@ -2,6 +2,7 @@
 
 ![license](https://img.shields.io/github/license/gerardpuig/ubuntu-cleaner.svg)
 [![Build Status](https://travis-ci.com/gerardpuig/ubuntu-cleaner.svg?branch=master)](https://travis-ci.com/gerardpuig/ubuntu-cleaner)
+[![Coverage Status](https://coveralls.io/repos/github/gerardpuig/ubuntu-cleaner/badge.svg?branch=master)](https://coveralls.io/github/gerardpuig/ubuntu-cleaner?branch=master)
 
 ![screenshot](data/screenshot.png)
 

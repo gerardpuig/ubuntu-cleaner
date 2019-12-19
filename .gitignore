@@ -1,5 +1,8 @@
 *.pyc
 .idea/
+.coverage
+*.swp
+venv/
 
 # Deb builds
 deb_dist/
