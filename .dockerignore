@@ -1,5 +1,4 @@
 venv/
-.git/
 *.pyc
 **/__pycache__
 *.egg-info

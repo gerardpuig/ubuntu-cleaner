@@ -40,11 +40,11 @@ USER ${USER}
 WORKDIR ${WORK_DIR}
 
 # install app dependencies
-COPY Makefile setup.py ${WORK_DIR}/
+COPY Makefile requirements.txt setup.py ${WORK_DIR}/
 RUN sudo apt update -qq > /dev/null \
     && sudo make system_dependencies \
     && make virtualenv \
-    && sudo rm ${WORK_DIR}/Makefile ${WORK_DIR}/setup.py \
+    && sudo rm ${WORK_DIR}/Makefile ${WORK_DIR}/requirements.txt ${WORK_DIR}/setup.py \
     && sudo rm -rf /var/lib/apt/lists/*
 
 COPY . ${WORK_DIR}
