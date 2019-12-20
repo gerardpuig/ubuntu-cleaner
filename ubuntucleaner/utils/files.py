@@ -1,6 +1,8 @@
 import logging
 
 from gettext import ngettext
+from gettext import gettext as _
+
 
 log = logging.getLogger('utils.files')
 
