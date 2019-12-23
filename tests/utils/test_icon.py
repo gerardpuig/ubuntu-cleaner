@@ -2,10 +2,10 @@ import unittest
 import mock
 
 from gi.repository import Gtk, GdkPixbuf
-from ubuntucleaner.utils.icon import get_from_name, DEFAULT_SIZE
+from ubuntucleaner.utils.icon import get_from_name, get_from_list, DEFAULT_SIZE
 
 
-def patch_load_icon(side_effect):
+def patch_load_icon(side_effect=None):
     return mock.patch(
         "ubuntucleaner.utils.icon.Gtk.IconTheme.load_icon",
         side_effect=side_effect)
@@ -13,6 +13,10 @@ def patch_load_icon(side_effect):
 
 def patch_log():
     return mock.patch("ubuntucleaner.utils.icon.log")
+
+
+def patch_get_from_name():
+    return mock.patch("ubuntucleaner.utils.icon.get_from_name")
 
 
 class TestIconModule(unittest.TestCase):
@@ -23,7 +27,7 @@ class TestIconModule(unittest.TestCase):
         and default parameters.
         """
         m_pixbuf = mock.Mock(spec=GdkPixbuf.Pixbuf, get_height=lambda: DEFAULT_SIZE)
-        with mock.patch("ubuntucleaner.utils.icon.Gtk.IconTheme.load_icon") as m_load_icon:
+        with patch_load_icon() as m_load_icon:
             m_load_icon.return_value = m_pixbuf
             pixbuf = get_from_name()
         self.assertEqual(
@@ -73,6 +77,7 @@ class TestIconModule(unittest.TestCase):
         )
         self.assertEqual(m_log.warning.call_count, 1)
         self.assertEqual(m_log.error.call_count, 0)
+        self.assertEqual(pixbuf, m_pixbuf)
         # more than one exception would fallback to random alter icon loading
         with patch_load_icon(side_effect=[Exception, Exception, m_pixbuf]) as m_load_icon, patch_log() as m_log:
             m_load_icon.return_value.scale_simple.return_value = m_pixbuf
@@ -83,3 +88,67 @@ class TestIconModule(unittest.TestCase):
         )
         self.assertEqual(m_log.warning.call_count, 1)
         self.assertEqual(m_log.error.call_count, 1)
+        self.assertEqual(pixbuf, m_pixbuf)
+
+    def test_get_from_list(self):
+        """Only the last working pixbuf loaded should be returned."""
+        m_pixbuf = mock.Mock(spec=GdkPixbuf.Pixbuf, get_height=lambda: DEFAULT_SIZE)
+        names = ("icon-name1", "icon-name2")
+        size = 1234
+        with patch_load_icon() as m_load_icon, patch_log() as m_log, patch_get_from_name() as m_get_from_name:
+            m_load_icon.side_effect = [None, m_pixbuf]
+            pixbuf = get_from_list(names, size)
+        self.assertEqual(
+            m_load_icon.call_args_list, [
+                mock.call("icon-name1", size, Gtk.IconLookupFlags.USE_BUILTIN),
+                mock.call("icon-name2", size, Gtk.IconLookupFlags.USE_BUILTIN)
+            ]
+        )
+        self.assertEqual(m_log.method_calls, [])
+        self.assertEqual(m_get_from_name.call_args_list, [])
+        self.assertEqual(pixbuf, m_pixbuf)
+
+    def test_get_from_list_exception(self):
+        """On exception the next pixbuf is returned."""
+        m_pixbuf = mock.Mock(spec=GdkPixbuf.Pixbuf, get_height=lambda: DEFAULT_SIZE)
+        names = ("icon-name1", "icon-name2")
+        size = 1234
+        with patch_load_icon() as m_load_icon, patch_log() as m_log, patch_get_from_name() as m_get_from_name:
+            m_load_icon.side_effect = [Exception, m_pixbuf]
+            pixbuf = get_from_list(names, size)
+        self.assertEqual(
+            m_load_icon.call_args_list, [
+                mock.call("icon-name1", size, Gtk.IconLookupFlags.USE_BUILTIN),
+                mock.call("icon-name2", size, Gtk.IconLookupFlags.USE_BUILTIN)
+            ]
+        )
+        self.assertEqual(
+            m_log.method_calls,
+            [mock.call.warning('get_from_list for icon-name1 failed, try next')]
+        )
+        self.assertEqual(m_get_from_name.call_args_list, [])
+        self.assertEqual(pixbuf, m_pixbuf)
+
+    def test_get_from_list_fallback(self):
+        """Should fallback on `get_from_name()` if no icons are found."""
+        m_pixbuf = mock.Mock(spec=GdkPixbuf.Pixbuf, get_height=lambda: DEFAULT_SIZE)
+        names = ("icon-name1",)
+        size = 1234
+        with patch_load_icon() as m_load_icon, patch_log() as m_log, patch_get_from_name() as m_get_from_name:
+            m_load_icon.side_effect = [Exception]
+            m_get_from_name.return_value = m_pixbuf
+            pixbuf = get_from_list(names, size)
+        self.assertEqual(
+            m_load_icon.call_args_list, [
+                mock.call("icon-name1", size, Gtk.IconLookupFlags.USE_BUILTIN),
+            ]
+        )
+        self.assertEqual(
+            m_log.method_calls,
+            [mock.call.warning('get_from_list for icon-name1 failed, try next')]
+        )
+        self.assertEqual(
+            m_get_from_name.call_args_list,
+            [mock.call('application-x-executable', size=size)]
+        )
+        self.assertEqual(pixbuf, m_pixbuf)
