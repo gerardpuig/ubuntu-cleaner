@@ -2,7 +2,7 @@ import unittest
 import mock
 
 from gi.repository import Gtk, GdkPixbuf
-from ubuntucleaner.utils.icon import get_from_name, get_from_list, DEFAULT_SIZE
+from ubuntucleaner.utils.icon import get_from_name, get_from_list, get_from_mime_type, get_from_file, DEFAULT_SIZE
 
 
 def patch_load_icon(side_effect=None):
@@ -17,6 +17,14 @@ def patch_log():
 
 def patch_get_from_name():
     return mock.patch("ubuntucleaner.utils.icon.get_from_name")
+
+
+def patch_get_from_list():
+    return mock.patch("ubuntucleaner.utils.icon.get_from_list")
+
+
+def patch_new_from_file_at_size():
+    return mock.patch("ubuntucleaner.utils.icon.GdkPixbuf.Pixbuf.new_from_file_at_size")
 
 
 class TestIconModule(unittest.TestCase):
@@ -151,4 +159,75 @@ class TestIconModule(unittest.TestCase):
             m_get_from_name.call_args_list,
             [mock.call('application-x-executable', size=size)]
         )
+        self.assertEqual(pixbuf, m_pixbuf)
+
+    def test_get_from_mime_type(self):
+        """By defaults returns the pixbuf using `get_from_list()`."""
+        m_pixbuf = mock.Mock(spec=GdkPixbuf.Pixbuf)
+        mime = "application/vnd.debian.binary-package"
+        size = 1234
+        with patch_log() as m_log, patch_get_from_list() as m_get_from_list, patch_get_from_name() as m_get_from_name:
+            m_get_from_list.return_value = m_pixbuf
+            pixbuf = get_from_mime_type(mime, size)
+        self.assertEqual(
+            m_get_from_list.call_args_list, [
+                mock.call(["application-vnd.debian.binary-package", "package-x-generic"], size=size),
+            ]
+        )
+        self.assertEqual(m_log.method_calls, [])
+        self.assertEqual(m_get_from_name.call_args_list, [])
+        self.assertEqual(pixbuf, m_pixbuf)
+
+    def test_get_from_mime_type_fallback(self):
+        """Should fallback to `get_from_name()` on exception."""
+        m_pixbuf = mock.Mock(spec=GdkPixbuf.Pixbuf)
+        mime = "application/vnd.debian.binary-package"
+        size = 1234
+        with patch_log() as m_log, patch_get_from_list() as m_get_from_list, patch_get_from_name() as m_get_from_name:
+            m_get_from_list.side_effect = [Exception]
+            m_get_from_name.return_value = m_pixbuf
+            pixbuf = get_from_mime_type(mime, size)
+        self.assertEqual(
+            m_get_from_list.call_args_list, [
+                mock.call(["application-vnd.debian.binary-package", "package-x-generic"], size=size),
+            ]
+        )
+        self.assertEqual(
+            m_log.method_calls, [mock.call.error('get_from_mime_type failed: ')])
+        self.assertEqual(m_get_from_name.call_args_list, [mock.call(size=size)])
+        self.assertEqual(pixbuf, m_pixbuf)
+
+    def test_get_from_file(self):
+        """By defaults returns the pixbuf using `new_from_file_at_size()`."""
+        m_pixbuf = mock.Mock(spec=GdkPixbuf.Pixbuf)
+        file_path = "/path/to/file"
+        size = 1234
+        with patch_log() as m_log, patch_get_from_name() as m_get_from_name, \
+                patch_new_from_file_at_size() as m_new_from_file_at_size:
+            m_new_from_file_at_size.return_value = m_pixbuf
+            pixbuf = get_from_file(file_path, size)
+        self.assertEqual(m_get_from_name.call_args_list, [])
+        self.assertEqual(m_log.method_calls, [])
+        self.assertEqual(
+            m_new_from_file_at_size.call_args_list, [mock.call(file_path, size, size)])
+        self.assertEqual(m_get_from_name.call_args_list, [])
+        self.assertEqual(pixbuf, m_pixbuf)
+
+    def test_get_from_file_fallback(self):
+        """Should fallback to `get_from_name()` on exception."""
+        m_pixbuf = mock.Mock(spec=GdkPixbuf.Pixbuf)
+        file_path = "/path/to/file"
+        size = 1234
+        with patch_log() as m_log, patch_get_from_name() as m_get_from_name, \
+                patch_new_from_file_at_size() as m_new_from_file_at_size:
+            m_new_from_file_at_size.side_effect = [Exception]
+            m_get_from_name.return_value = m_pixbuf
+            pixbuf = get_from_file(file_path, size)
+        self.assertEqual(m_get_from_name.call_args_list, [mock.call(only_path=False, size=1234)])
+        self.assertEqual(m_log.method_calls, [mock.call.error('get_from_file failed: ')])
+        self.assertEqual(
+            m_new_from_file_at_size.call_args_list, [mock.call(file_path, size, size)])
+        self.assertEqual(m_get_from_name.call_args_list, [mock.call(only_path=False, size=1234)])
+        self.assertEqual(
+            m_log.method_calls, [mock.call.error('get_from_file failed: ')])
         self.assertEqual(pixbuf, m_pixbuf)
