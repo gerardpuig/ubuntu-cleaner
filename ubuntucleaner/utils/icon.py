@@ -70,8 +70,6 @@ def get_from_mime_type(mime, size=DEFAULT_SIZE):
         log.error('get_from_mime_type failed: %s' % e)
         return get_from_name(size=size)
 
-    return pixbuf
-
 
 def get_from_file(file, size=DEFAULT_SIZE, only_path=False):
     try:
