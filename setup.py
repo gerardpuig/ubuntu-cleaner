@@ -27,8 +27,8 @@ setup(
         'dbus',
         'defer',
         'apt',
-        'python-aptdaemon',
-        'python-aptdaemon.gtk3widgets'
+        'python3-aptdaemon',
+        'python3-aptdaemon.gtk3widgets'
     ],
     license='GNU GPL',
     platforms='linux',

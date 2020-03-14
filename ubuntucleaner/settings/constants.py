@@ -1,8 +1,7 @@
-import os
 import gettext
+import os
 
 from gi.repository import GLib
-
 from ubuntucleaner import __version__
 
 __all__ = (
@@ -45,7 +44,7 @@ def init_locale():
     try:
         INIT
     except:
-        gettext.install(PACKAGE, unicode=True)
+        gettext.install(PACKAGE)
 
         INIT = True
 

@@ -1,8 +1,8 @@
+import logging
 import os
 import random
-import logging
 
-from gi.repository import Gtk, Gio, GdkPixbuf
+from gi.repository import GdkPixbuf, Gio, Gtk
 
 log = logging.getLogger("utils.icon")
 
@@ -29,14 +29,14 @@ def get_from_name(name='gtk-execute',
 
     try:
         pixbuf = icontheme.load_icon(name, size, 0)
-    except Exception, e:
+    except Exception as e:
         log.warning(e)
         # if the alter name isn't here, so use random icon
 
         while not pixbuf:
             try:
                 pixbuf = icontheme.load_icon(alter, size, 0)
-            except Exception, e:
+            except Exception as e:
                 log.error(e)
                 icons = icontheme.list_icons(None)
                 alter = icons[random.randint(0, len(icons) - 1)]
@@ -54,7 +54,7 @@ def get_from_list(list, size=DEFAULT_SIZE):
             pixbuf = icontheme.load_icon(name,
                                          size,
                                          Gtk.IconLookupFlags.USE_BUILTIN)
-        except Exception, e:
+        except Exception:
             log.warning('get_from_list for %s failed, try next' % name)
             continue
 
@@ -66,7 +66,7 @@ def get_from_mime_type(mime, size=DEFAULT_SIZE):
         gicon = Gio.content_type_get_icon(mime)
 
         return get_from_list(gicon.get_names(), size=size)
-    except Exception, e:
+    except Exception as e:
         log.error('get_from_mime_type failed: %s' % e)
         return get_from_name(size=size)
 
@@ -74,7 +74,7 @@ def get_from_mime_type(mime, size=DEFAULT_SIZE):
 def get_from_file(file, size=DEFAULT_SIZE, only_path=False):
     try:
         return GdkPixbuf.Pixbuf.new_from_file_at_size(file, size, size)
-    except Exception, e:
+    except Exception as e:
         log.error('get_from_file failed: %s' % e)
         return get_from_name(size=size, only_path=only_path)
 
@@ -92,7 +92,7 @@ def get_from_app(app, size=DEFAULT_SIZE):
                 return get_from_file(file, size)
         if not pixbuf:
             return get_from_name('application-x-executable', size=size)
-    except Exception, e:
+    except Exception as e:
         log.error('get_from_app failed: %s' % e)
         return get_from_name(size=size)
 
@@ -104,9 +104,10 @@ def guess_from_path(filepath, size=DEFAULT_SIZE):
     try:
         mime_type, result = Gio.content_type_guess(filepath, open(filepath).read(10))
         return get_from_mime_type(mime_type, size)
-    except Exception, e:
+    except Exception as e:
         log.error('guess_from_path failed: %s' % e)
         return get_from_name(size=size)
 
+
 if __name__ == '__main__':
-    print get_from_name('ok', alter='ko')
+    print(get_from_name('ok', alter='ko'))

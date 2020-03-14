@@ -34,7 +34,7 @@ APP = get_app()
 
 
 if __name__ == '__main__':
-    print 'DISTRO: ', DISTRO
-    print 'CODENAME: ', CODENAME
-    print 'DESKTOP: ', DESKTOP
-    print 'APP: ', APP
+    print('DISTRO: ', DISTRO)
+    print('CODENAME: ', CODENAME)
+    print('DESKTOP: ', DESKTOP)
+    print('APP: ', APP)

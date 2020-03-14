@@ -152,7 +152,7 @@ class JanitorCachePlugin(JanitorPlugin):
     def __str__(self):
         try:
             return self.__module__.split('.')[-1]
-        except Exception, e:
+        except Exception:
             return "%s Plugin" % self.__title__
 
     @classmethod
@@ -172,7 +172,7 @@ class JanitorCachePlugin(JanitorPlugin):
                         if os.path.isdir(new_root_path):
                             try:
                                 size = os.popen('du -bs "%s"' % new_root_path).read().split()[0]
-                            except:
+                            except Exception:
                                 size = 0
                         else:
                             size = os.path.getsize(new_root_path)
@@ -199,7 +199,7 @@ class JanitorCachePlugin(JanitorPlugin):
                 else:
                     os.remove(cruft.get_path())
                 self.emit('object_cleaned', cruft, index + 1)
-            except Exception, e:
+            except Exception as e:
                 log.error(run_traceback(e))
                 self.emit('clean_error', cruft.get_name())
                 break
@@ -252,7 +252,7 @@ class JanitorCachePlugin(JanitorPlugin):
 
                         try:
                             size = os.popen('du -bs "%s"' % full_path).read().split()[0]
-                        except:
+                        except Exception:
                             size = 0
                         count += 1
                         total_size += int(size)
@@ -264,7 +264,7 @@ class JanitorCachePlugin(JanitorPlugin):
                     continue
 
             self.emit('scan_finished', True, count, total_size)
-        except Exception, e:
+        except Exception as e:
             log.error(e)
             self.emit('scan_error', e)
 

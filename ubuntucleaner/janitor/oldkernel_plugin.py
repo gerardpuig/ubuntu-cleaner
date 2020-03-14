@@ -24,7 +24,7 @@ class OldKernelPlugin(JanitorPlugin):
         try:
             self.current_kernel_version = self.p_kernel_version.findall('-'.join(os.uname()[2].split('-')[:2]))[0]
             log.debug("the current_kernel_version is %s" % self.current_kernel_version)
-        except Exception, e:
+        except Exception as e:
             log.error(e)
             self.current_kernel_version = '3.2.0-36'
 
@@ -45,7 +45,7 @@ class OldKernelPlugin(JanitorPlugin):
                                   count)
 
             self.emit('scan_finished', True, count, size)
-        except Exception, e:
+        except Exception as e:
             error = get_traceback()
             log.error(error)
             self.emit('scan_error', error)

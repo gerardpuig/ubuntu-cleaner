@@ -7,9 +7,6 @@ from ubuntucleaner.settings.debug import log_traceback
 
 log = logging.getLogger('ModuleLoader')
 
-def module_cmp(m1, m2):
-    return cmp(m1.get_title(), m2.get_title())
-
 
 class ModuleLoader:
     module_table = None
@@ -45,7 +42,7 @@ class ModuleLoader:
             try:
                 m = __import__('ubuntucleaner.%s' % self.feature, fromlist='ubuntucleaner')
                 self.do_folder_import(m.__path__[0])
-            except ImportError, e:
+            except ImportError as e:
                 log.error(e)
 
     @classmethod
@@ -66,7 +63,7 @@ class ModuleLoader:
 
         try:
             package = __import__(module_name)
-        except Exception, e:
+        except Exception as e:
             log.error("Module import error: %s", str(e))
         else:
             for k, v in inspect.getmembers(package):
@@ -119,7 +116,7 @@ class ModuleLoader:
 
     def get_modules_by_category(self, category):
         modules = self.category_table.get(category).values()
-        modules.sort(module_cmp)
+        sorted(modules, key=lambda module: module.get_title())
         return modules
 
     def get_module(self, name):

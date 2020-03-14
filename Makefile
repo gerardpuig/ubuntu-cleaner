@@ -1,8 +1,8 @@
 VIRTUAL_ENV ?= venv
 PIP=$(VIRTUAL_ENV)/bin/pip
 PYTHON=$(VIRTUAL_ENV)/bin/python
-PYTHON_MAJOR_VERSION=2
-PYTHON_MINOR_VERSION=7
+PYTHON_MAJOR_VERSION=3
+PYTHON_MINOR_VERSION=6
 COVERALLS=$(VIRTUAL_ENV)/bin/coveralls
 COVERAGE=$(VIRTUAL_ENV)/bin/coverage
 SYSTEM_DEPENDENCIES= \
@@ -11,9 +11,9 @@ SYSTEM_DEPENDENCIES= \
     libpython$(PYTHON_VERSION)-dev \
     python$(PYTHON_VERSION) \
     python$(PYTHON_VERSION)-dev \
-    python-aptdaemon \
-    python-aptdaemon.gtk3widgets \
-    python-gi \
+    python3-aptdaemon \
+    python3-aptdaemon.gtk3widgets \
+    python3-gi \
     virtualenv
 PYTHON_VERSION=$(PYTHON_MAJOR_VERSION).$(PYTHON_MINOR_VERSION)
 PYTHON_MAJOR_MINOR=$(PYTHON_MAJOR_VERSION)$(PYTHON_MINOR_VERSION)

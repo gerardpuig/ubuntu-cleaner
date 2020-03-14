@@ -30,7 +30,7 @@ class MozillaCachePlugin(JanitorCachePlugin):
                         relative_id = config.get_value(section, 'IsRelative')
                         if relative_id == profile_id:
                             return os.path.expanduser('%s/%s' % (cls.cache_path, config.get_value(section, 'Path')))
-            except Exception, e:
+            except Exception as e:
                 log.error(e)
                 path = config.get_value('Profile0', 'Path')
                 if path:
