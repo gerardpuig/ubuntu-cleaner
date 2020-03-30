@@ -13,6 +13,9 @@ Ubuntu Cleaner is distributed in the hope that it will be useful, but WITHOUT AN
 You should have received a copy of the GNU General Public License along with Ubuntu Cleaner; if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA</property>
     <property name="authors">Gerard Puig &lt;gerardpuigdev@gmail.com&gt;
 
+Contributors
+Andre Miras https://github.com/AndreMiras
+
 Based on Ubuntu Tweak
 Tualatrix Chou &lt;tualatrix@gmail.com&gt;
     </property>
