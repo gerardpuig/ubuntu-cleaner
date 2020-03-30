@@ -1,13 +1,12 @@
+import logging
 import os
 import re
-import logging
-
 from distutils.version import LooseVersion
+
 from ubuntucleaner.gui.gtk import set_busy, unset_busy
 from ubuntucleaner.janitor import JanitorPlugin, PackageObject
+from ubuntucleaner.settings.debug import get_traceback, log_func
 from ubuntucleaner.utils.package import AptWorker
-from ubuntucleaner.settings.debug import log_func, get_traceback
-
 
 log = logging.getLogger('OldKernelPlugin')
 
@@ -26,7 +25,7 @@ class OldKernelPlugin(JanitorPlugin):
             log.debug("the current_kernel_version is %s" % self.current_kernel_version)
         except Exception as e:
             log.error(e)
-            self.current_kernel_version = '3.2.0-36'
+            self.current_kernel_version = 'undefined'
 
     def get_cruft(self):
         try:
