@@ -3,7 +3,7 @@ import unittest
 from ubuntucleaner.janitor.oldkernel_plugin import OldKernelPlugin
 
 
-class TestJanitorFunctions(unittest.TestCase):
+class TestOldKernelPlugin(unittest.TestCase):
     def setUp(self):
         self.oldkernel_plugin = OldKernelPlugin()
         self.oldkernel_plugin.current_kernel_version = '2.6.38-10'
