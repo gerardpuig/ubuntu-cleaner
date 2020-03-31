@@ -10,6 +10,7 @@ setup(
     author_email='gerardpuigdev@gmail.com',
     scripts=['ubuntu-cleaner'],
     packages=find_packages(exclude=['tests']),
+    test_suite='tests_build',
     data_files=[
         ('../etc/dbus-1/system.d/', ['data/ubuntu-cleaner-daemon.conf']),
         ('share/dbus-1/system-services', ['data/com.ubuntu_cleaner.daemon.service']),
@@ -23,10 +24,6 @@ setup(
         ('share/ubuntu-cleaner/', ['data/ubuntu-cleaner-daemon']),
     ],
     python_requires='>=3.6',
-    install_requires=[
-        'lxml',
-        'defer'
-    ],
     license='GNU GPL',
     platforms='linux',
 )
