@@ -55,3 +55,9 @@ docker/make/%:
 
 docker/shell:
 	docker run --env-file docker.env -v $(DOCKER_VOLUME) -it --rm $(DOCKER_IMAGE)
+
+.ONESHELL:
+launchpad: deb
+	cd deb_dist
+	debsign `ls *source.changes`
+	dput ppa:gerardpuig/ppa `ls *source.changes`
