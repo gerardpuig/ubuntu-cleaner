@@ -36,5 +36,5 @@ class PolicyKitService(dbus.service.Object):
         except AccessDeniedException:
             raise
 
-        except dbus.DBusException, ex:
+        except dbus.DBusException as ex:
             raise AccessDeniedException(ex.message)

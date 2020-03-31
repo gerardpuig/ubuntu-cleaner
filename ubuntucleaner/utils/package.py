@@ -32,7 +32,7 @@ class NewAptProgressDialog(AptProgressDialog):
         """
         try:
             self._run(attach, close_on_finished, show_error, error_handler)
-        except Exception, error:
+        except Exception as error:
             if error_handler:
                 error_handler(error)
             else:
@@ -54,7 +54,7 @@ class NewAptProgressDialog(AptProgressDialog):
             try:
                 deferred = self._transaction.run()
                 yield deferred
-            except Exception, error:
+            except Exception as error:
                 error_handler(error)
                 self._transaction.emit('finished', '')
                 yield deferred
@@ -126,9 +126,9 @@ class AptWorker(object):
             log.debug("aptdaemon.errors.NotAuthorizedError")
             # Silently ignore auth failures
             return
-        except aptdaemon.errors.TransactionFailed, error:
+        except aptdaemon.errors.TransactionFailed as error:
             log.error("TransactionFailed: %s" % error)
-        except Exception, error:
+        except Exception as error:
             log.error("TransactionFailed with unknown error: %s" % error)
             error = aptdaemon.errors.TransactionFailed(ERROR_UNKNOWN,
                                                        str(error))
@@ -162,7 +162,7 @@ class AptWorker(object):
     def get_cache(self):
         try:
             self.update_apt_cache()
-        except Exception, e:
+        except Exception as e:
             self.is_apt_broken = True
             self.apt_broken_message = e
             log.error("Error happened when get_cache(): %s" % str(e))

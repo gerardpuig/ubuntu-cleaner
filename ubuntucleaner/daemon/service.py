@@ -1,14 +1,14 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
-import os
 import fcntl
 import logging
+import os
 import subprocess
-import dbus
-import dbus.service
-import dbus.mainloop.glib
 
-from ubuntucleaner.daemon import PolicyKitService, PK_ACTION_CLEAN
+import dbus
+import dbus.mainloop.glib
+import dbus.service
+from ubuntucleaner.daemon import PK_ACTION_CLEAN, PolicyKitService
 
 log = logging.getLogger('DaemonService')
 

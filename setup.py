@@ -22,13 +22,10 @@ setup(
         ('share/icons/hicolor/32x32/apps/', ['data/icons/32x32/apps/ubuntu-cleaner.png']),
         ('share/ubuntu-cleaner/', ['data/ubuntu-cleaner-daemon']),
     ],
+    python_requires='>=3.6',
     install_requires=[
         'lxml',
-        'dbus',
-        'defer',
-        'apt',
-        'python-aptdaemon',
-        'python-aptdaemon.gtk3widgets'
+        'defer'
     ],
     license='GNU GPL',
     platforms='linux',

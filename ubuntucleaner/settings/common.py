@@ -1,6 +1,6 @@
 import glob
 import logging
-import ConfigParser
+from configparser import ConfigParser
 
 from lxml import etree
 
@@ -44,7 +44,7 @@ class RawConfigSetting(object):
         return value
 
     def init_configparser(self):
-        self._configparser = ConfigParser.ConfigParser()
+        self._configparser = ConfigParser()
         self._configparser.read(self._path)
 
     def sections(self):
@@ -60,7 +60,7 @@ class RawConfigSetting(object):
             self._configparser.add_section(section)
 
         self._configparser.set(section, option, value)
-        with open(self._path, 'wb') as configfile:
+        with open(self._path, 'w') as configfile:
             self._configparser.write(configfile)
 
         self.init_configparser()
@@ -101,7 +101,7 @@ class Schema(object):
                     cls.cached_override[section] = {}
                     for option in cs.options(section):
                         cls.cached_override[section][option] = cs.get_value(section, option)
-            except Exception, e:
+            except Exception:
                 log.error('Error while parsing override file: %s' % override)
 
     @classmethod
