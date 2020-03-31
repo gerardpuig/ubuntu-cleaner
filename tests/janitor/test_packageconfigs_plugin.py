@@ -26,9 +26,7 @@ class TestPackageConfigsPlugin(unittest.TestCase):
         self.packageconfig_plugin = PackageConfigsPlugin()
 
     def test_get_cruft(self):
-        mocked_emit = mock.Mock()
-
-        with mock.patch.object(PackageConfigsPlugin, 'emit', mocked_emit):
+        with mock.patch.object(PackageConfigsPlugin, 'emit') as mocked_emit:
             self.packageconfig_plugin.get_cruft()
 
         mocked_emit.assert_called_with('scan_finished', True, mocked_emit.call_count - 1, 0)
