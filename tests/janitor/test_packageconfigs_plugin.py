@@ -32,9 +32,7 @@ class TestPackageConfigsPlugin(unittest.TestCase):
         mocked_emit.assert_called_with('scan_finished', True, mocked_emit.call_count - 1, 0)
 
     def test_clean_empty_cruft(self):
-        mocked_emit = mock.Mock()
-
-        with mock.patch.object(PackageConfigsPlugin, 'emit', mocked_emit):
+        with mock.patch.object(PackageConfigsPlugin, 'emit') as mocked_emit:
             self.packageconfig_plugin.clean_cruft()
 
         mocked_emit.assert_called_with('all_cleaned', True)
