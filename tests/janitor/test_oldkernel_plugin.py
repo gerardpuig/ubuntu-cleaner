@@ -25,9 +25,7 @@ class TestOldKernelPlugin(unittest.TestCase):
         self.assertEqual(plugin.current_kernel_version, 'undefined')
 
     def test_get_cruft(self):
-        mocked_emit = mock.Mock()
-
-        with mock.patch.object(OldKernelPlugin, 'emit', mocked_emit):
+        with mock.patch.object(OldKernelPlugin, 'emit') as mocked_emit:
             self.oldkernel_plugin.get_cruft()
 
         mocked_emit.assert_called_with('scan_finished', True, mocked_emit.call_count - 1, 0)
