@@ -33,9 +33,7 @@ class TestOldKernelPlugin(unittest.TestCase):
     @mock.patch('ubuntucleaner.janitor.oldkernel_plugin.OldKernelPlugin.is_old_kernel_package',
                 mock.Mock(side_effect=Exception))
     def test_get_cruft_exception(self):
-        mocked_traceback = mock.Mock()
-
-        with mock.patch('ubuntucleaner.janitor.oldkernel_plugin.get_traceback', mocked_traceback):
+        with mock.patch('ubuntucleaner.janitor.oldkernel_plugin.get_traceback') as mocked_traceback:
             self.oldkernel_plugin.get_cruft()
 
         mocked_traceback.assert_called_once_with()
