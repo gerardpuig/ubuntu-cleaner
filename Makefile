@@ -33,7 +33,11 @@ $(VIRTUAL_ENV):
 virtualenv: $(VIRTUAL_ENV)
 
 deb:
-	$(PYTHON) setup.py --command-packages=stdeb.command sdist_dsc --package ubuntu-cleaner bdist_deb
+	# Launchpad fix to avoid debian build rule to execute unittest discover on ubuntucleaner main package.
+	mkdir tests_build
+	touch tests_build/__init__.py
+	$(PYTHON) setup.py --command-packages=stdeb.command sdist_dsc bdist_deb
+	rm -rf tests_build
 
 clean:
 	@rm -rf deb_dist dist ubuntu_cleaner.egg-info
