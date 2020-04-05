@@ -4,7 +4,6 @@ import shutil
 import logging
 import threading
 
-from defer import inline_callbacks
 from collections import OrderedDict
 
 from gi.repository import GObject, Gtk, Gdk, Pango
@@ -679,7 +678,6 @@ class JanitorPage(Gtk.VBox, GuiBuilder):
         plugin.set_property('scan_finished', True)
         plugin.set_property('error', error)
 
-    @inline_callbacks
     def on_clean_button_clicked(self, widget):
         self.plugin_to_run = 0
 
