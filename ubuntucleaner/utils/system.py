@@ -1,11 +1,10 @@
 import os
-import platform
 
 from ubuntucleaner.settings.constants import APP, PKG_VERSION
 
 
 def get_distro():
-    return ' '.join(platform.dist())
+    return os.popen('lsb_release -ds').read().strip()
 
 
 def get_codename():
@@ -31,10 +30,3 @@ DISTRO = get_distro()
 CODENAME = get_codename()
 DESKTOP = get_desktop()
 APP = get_app()
-
-
-if __name__ == '__main__':
-    print('DISTRO: ', DISTRO)
-    print('CODENAME: ', CODENAME)
-    print('DESKTOP: ', DESKTOP)
-    print('APP: ', APP)
