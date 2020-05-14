@@ -13,3 +13,10 @@ class ChromiumCachePlugin(JanitorCachePlugin):
     __category__ = 'application'
 
     root_path = '~/.cache/chromium/Default'
+
+
+class ChromiumSnapCachePlugin(JanitorCachePlugin):
+    __title__ = _('Chromium Cache')
+    __category__ = 'application'
+
+    root_path = '~/snap/chromium/common/.cache/chromium/Default'
