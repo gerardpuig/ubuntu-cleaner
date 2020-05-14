@@ -62,7 +62,7 @@ class DaemonService(PolicyKitService):
                 except:
                     return '', 'None'
             else:
-                strings, returncode = ''.join(self.p.stdout.readlines()), str(terminaled)
+                strings, returncode = b' '.join(self.p.stdout.readlines()), str(terminaled)
                 self.p = None
                 return strings, returncode
         else:
