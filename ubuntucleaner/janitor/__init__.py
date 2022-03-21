@@ -636,8 +636,6 @@ class JanitorPage(Gtk.VBox, GuiBuilder):
                                                plugin,
                                                cruft))
 
-        self.result_view.expand_row(self.result_model.get_path(result_iter), True)
-
         # Update the janitor title
         if count:
             self.janitor_model[plugin_iter][self.JANITOR_DISPLAY] = "<b>[%d] %s</b>" % (count, plugin.get_title())
@@ -731,7 +729,6 @@ class JanitorPage(Gtk.VBox, GuiBuilder):
                     self.result_view.get_selection().select_path(row.path)
                     self.result_view.scroll_to_cell(row.path)
                     row[self.RESULT_DISPLAY] = '<b>%s</b>' % _('Cleaning cruft for "%s"...') % plugin.get_title()
-                    self.result_view.expand_row(self.result_model.get_path(row.iter), True)
 
             self.janitor_model[plugin_iter][self.JANITOR_SPINNER_ACTIVE] = True
             self.janitor_model[plugin_iter][self.JANITOR_SPINNER_PULSE] = 0
